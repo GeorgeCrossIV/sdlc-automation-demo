@@ -1,11 +1,12 @@
 /**
  * App.tsx
- * Shell: top nav + time-range tabs for the tracked-company views.
+ * Shell: top nav + time-range tabs for the tracked-company views and company lookup.
  */
 import { useState } from 'react';
 import { CurrentDayView } from './views/CurrentDayView';
 import { WeekView } from './views/WeekView';
 import { QuarterView } from './views/QuarterView';
+import { CompanyLookupView } from './views/CompanyLookupView';
 import type { TimeRange } from './services/stockData';
 import './App.css';
 
@@ -16,11 +17,15 @@ const APP_TABS: { label: string; value: TimeRange }[] = [
 ];
 
 function AppTabs({
-  active,
-  onChange,
+  activeTab,
+  activeView,
+  onTabChange,
+  onLookupClick,
 }: {
-  active: TimeRange;
-  onChange: (v: TimeRange) => void;
+  activeTab: TimeRange;
+  activeView: 'dashboard' | 'lookup';
+  onTabChange: (v: TimeRange) => void;
+  onLookupClick: () => void;
 }) {
   return (
     <nav className="app-tabs" role="tablist" aria-label="Dashboard view">
@@ -28,19 +33,28 @@ function AppTabs({
         <button
           key={value}
           role="tab"
-          aria-selected={active === value}
-          className={`app-tab ${active === value ? 'app-tab--active' : ''}`}
-          onClick={() => onChange(value)}
+          aria-selected={activeTab === value}
+          className={`app-tab ${activeTab === value ? 'app-tab--active' : ''}`}
+          onClick={() => onTabChange(value)}
         >
           {label}
         </button>
       ))}
+      <button
+        role="tab"
+        aria-selected={activeView === 'lookup'}
+        className={`app-tab app-tab--lookup ${activeView === 'lookup' ? 'app-tab--active' : ''}`}
+        onClick={onLookupClick}
+      >
+        Company Lookup
+      </button>
     </nav>
   );
 }
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TimeRange>('day');
+  const [activeView, setActiveView] = useState<'dashboard' | 'lookup'>('dashboard');
 
   return (
     <div className="app">
@@ -53,12 +67,23 @@ export default function App() {
       </header>
 
       <main className="app-main">
-        <AppTabs active={activeTab} onChange={setActiveTab} />
+        <AppTabs
+          activeTab={activeTab}
+          activeView={activeView}
+          onTabChange={(range) => setActiveTab(range)}
+          onLookupClick={() => setActiveView('lookup')}
+        />
 
         <div className="app-panel" role="tabpanel">
-          {activeTab === 'day' && <CurrentDayView />}
-          {activeTab === 'week' && <WeekView />}
-          {activeTab === 'quarter' && <QuarterView />}
+          {activeView === 'lookup' ? (
+            <CompanyLookupView range={activeTab} />
+          ) : (
+            <>
+              {activeTab === 'day' && <CurrentDayView />}
+              {activeTab === 'week' && <WeekView />}
+              {activeTab === 'quarter' && <QuarterView />}
+            </>
+          )}
         </div>
       </main>
     </div>

@@ -43,3 +43,28 @@ describe('fetchStockSeries (mock)', () => {
     });
   });
 });
+
+describe('fetchStockSeries — arbitrary ticker (mock)', () => {
+  it('returns 78 data points for day range', async () => {
+    const result = await fetchStockSeries([{ ticker: 'AAPL', name: 'AAPL' }], 'day');
+    expect(result[0].data).toHaveLength(78);
+  });
+
+  it('returns 5 data points for week range', async () => {
+    const result = await fetchStockSeries([{ ticker: 'AAPL', name: 'AAPL' }], 'week');
+    expect(result[0].data).toHaveLength(5);
+  });
+
+  it('returns 65 data points for quarter range', async () => {
+    const result = await fetchStockSeries([{ ticker: 'AAPL', name: 'AAPL' }], 'quarter');
+    expect(result[0].data).toHaveLength(65);
+  });
+
+  it('all prices are positive and timestamps are valid ISO strings', async () => {
+    const result = await fetchStockSeries([{ ticker: 'AAPL', name: 'AAPL' }], 'quarter');
+    result[0].data.forEach(({ timestamp, price }) => {
+      expect(new Date(timestamp).getTime()).not.toBeNaN();
+      expect(price).toBeGreaterThan(0);
+    });
+  });
+});
