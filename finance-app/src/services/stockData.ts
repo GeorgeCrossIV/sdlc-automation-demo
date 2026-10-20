@@ -86,7 +86,8 @@ function generateMockSeries(
 
 const useMock =
   import.meta.env.VITE_USE_MOCK === 'true' ||
-  import.meta.env.MODE === 'test';
+  import.meta.env.MODE === 'test' ||
+  import.meta.env.MODE === 'development';
 
 /**
  * Fetch historical price series for a list of tickers over the given range.
@@ -106,29 +107,6 @@ export async function fetchStockSeries(
 
   // Real Yahoo Finance fetch would go here.
   // Keeping as a stub — CI always runs with VITE_USE_MOCK=true.
-  throw new Error(
-    'Live data fetching is not implemented. Set VITE_USE_MOCK=true.',
-  );
-}
-
-/**
- * Fetch historical price series for a single user-supplied ticker.
- * Returns null if the ticker is unknown / returns no data in mock mode.
- */
-export async function fetchUserTicker(
-  ticker: string,
-  range: TimeRange,
-): Promise<StockSeries | null> {
-  const symbol = ticker.toUpperCase().trim();
-  if (!symbol) return null;
-
-  if (useMock) {
-    await new Promise((r) => setTimeout(r, 50));
-    // Any 1-5 letter symbol is accepted in mock mode
-    if (!/^[A-Z]{1,5}$/.test(symbol)) return null;
-    return generateMockSeries(symbol, symbol, range);
-  }
-
   throw new Error(
     'Live data fetching is not implemented. Set VITE_USE_MOCK=true.',
   );

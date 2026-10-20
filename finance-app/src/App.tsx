@@ -1,31 +1,26 @@
 /**
  * App.tsx
- * Shell: top nav + time-range tabs for the tracked-company views,
- * plus a dedicated "Company Lookup" tab backed by UserTickerView.
+ * Shell: top nav + time-range tabs for the tracked-company views.
  */
 import { useState } from 'react';
 import { CurrentDayView } from './views/CurrentDayView';
 import { WeekView } from './views/WeekView';
 import { QuarterView } from './views/QuarterView';
-import { UserTickerView } from './views/UserTickerView';
 import type { TimeRange } from './services/stockData';
 import './App.css';
 
-type AppTab = TimeRange | 'lookup';
-
-const APP_TABS: { label: string; value: AppTab }[] = [
+const APP_TABS: { label: string; value: TimeRange }[] = [
   { label: 'Today', value: 'day' },
   { label: '7 Days', value: 'week' },
   { label: 'Quarter', value: 'quarter' },
-  { label: 'Company Lookup', value: 'lookup' },
 ];
 
 function AppTabs({
   active,
   onChange,
 }: {
-  active: AppTab;
-  onChange: (v: AppTab) => void;
+  active: TimeRange;
+  onChange: (v: TimeRange) => void;
 }) {
   return (
     <nav className="app-tabs" role="tablist" aria-label="Dashboard view">
@@ -45,7 +40,7 @@ function AppTabs({
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<AppTab>('day');
+  const [activeTab, setActiveTab] = useState<TimeRange>('day');
 
   return (
     <div className="app">
@@ -64,7 +59,6 @@ export default function App() {
           {activeTab === 'day' && <CurrentDayView />}
           {activeTab === 'week' && <WeekView />}
           {activeTab === 'quarter' && <QuarterView />}
-          {activeTab === 'lookup' && <UserTickerView />}
         </div>
       </main>
     </div>

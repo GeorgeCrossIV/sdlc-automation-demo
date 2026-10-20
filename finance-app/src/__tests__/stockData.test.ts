@@ -3,11 +3,7 @@
  * Unit tests for the mock data service.
  */
 import { describe, it, expect } from 'vitest';
-import {
-  fetchStockSeries,
-  fetchUserTicker,
-  TRACKED_COMPANIES,
-} from '../services/stockData';
+import { fetchStockSeries, TRACKED_COMPANIES } from '../services/stockData';
 
 describe('fetchStockSeries (mock)', () => {
   it('returns a series for each requested company', async () => {
@@ -45,30 +41,5 @@ describe('fetchStockSeries (mock)', () => {
       expect(new Date(timestamp).getTime()).not.toBeNaN();
       expect(price).toBeGreaterThan(0);
     });
-  });
-});
-
-describe('fetchUserTicker (mock)', () => {
-  it('returns a series for a valid symbol', async () => {
-    const result = await fetchUserTicker('AAPL', 'week');
-    expect(result).not.toBeNull();
-    expect(result!.ticker).toBe('AAPL');
-    expect(result!.data.length).toBeGreaterThan(0);
-  });
-
-  it('returns null for an invalid symbol (digits)', async () => {
-    const result = await fetchUserTicker('123', 'day');
-    expect(result).toBeNull();
-  });
-
-  it('returns null for an empty string', async () => {
-    const result = await fetchUserTicker('', 'day');
-    expect(result).toBeNull();
-  });
-
-  it('normalises lowercase input to uppercase', async () => {
-    const result = await fetchUserTicker('aapl', 'week');
-    expect(result).not.toBeNull();
-    expect(result!.ticker).toBe('AAPL');
   });
 });
