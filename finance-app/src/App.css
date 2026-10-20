@@ -95,6 +95,10 @@ body {
   border-bottom-color: #1d4ed8;
 }
 
+.app-tab--lookup {
+  margin-left: auto;
+}
+
 .app-panel {
   background: #fff;
   border-radius: 10px;
