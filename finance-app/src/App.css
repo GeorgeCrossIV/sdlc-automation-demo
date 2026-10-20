@@ -1,0 +1,134 @@
+/* App.css — Finance Analytics Dashboard global styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+  background: #f3f4f6;
+  color: #1f2328;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── App shell ────────────────────────────────────────────────────── */
+
+.app {
+  min-height: 100vh;
+}
+
+.app-header {
+  background: #1e3a5f;
+  color: #fff;
+  padding: 0 24px;
+}
+
+.app-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+}
+
+.app-logo {
+  font-size: 24px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.app-badge {
+  font-size: 11px;
+  background: #fbbf24;
+  color: #1c1917;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.app-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+/* ── App tab bar ────────────────────────────────────────────────────── */
+
+.app-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.app-tab {
+  padding: 8px 20px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s;
+  margin-bottom: -2px;
+}
+
+.app-tab:hover {
+  color: #1d4ed8;
+}
+
+.app-tab--active {
+  color: #1d4ed8;
+  border-bottom-color: #1d4ed8;
+}
+
+.app-panel {
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Typography ────────────────────────────────────────────────────── */
+
+h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1f2328;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* ── Status messages ───────────────────────────────────────────────── */
+
+.status {
+  padding: 16px 0;
+  color: #6b7280;
+}
+
+.status.error {
+  color: #dc2626;
+}
+
+.status.muted {
+  color: #9ca3af;
+  font-style: italic;
+}
