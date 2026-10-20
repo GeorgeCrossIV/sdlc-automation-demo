@@ -86,7 +86,8 @@ function generateMockSeries(
 
 const useMock =
   import.meta.env.VITE_USE_MOCK === 'true' ||
-  import.meta.env.MODE === 'test';
+  import.meta.env.MODE === 'test' ||
+  import.meta.env.MODE === 'development';
 
 /**
  * Fetch historical price series for a list of tickers over the given range.
